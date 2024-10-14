@@ -42,7 +42,6 @@ interface HitCardProps {
 const HitCard = ({ hit }: HitCardProps) => {
   const { addProduct } = useProducts()
   const [quantity, setQuantity] = useState(1)
-  console.log(hit)
 
   return (
     <Card key={hit.objectID} className='w-[290px]'>
