@@ -9,29 +9,6 @@ interface Product {
   Imagen: string
   objectID: string
   quantity: number
-  _highlightResult: {
-    Product: {
-      value: string
-      matchLevel: string
-      matchedWords: string[]
-    }
-    SKU: {
-      value: string
-      matchLevel: string
-      matchedWords: string[]
-    }
-    Stock: {
-      value: string
-      matchLevel: string
-      matchedWords: string[]
-    }
-    Imagen: {
-      value: string
-      matchLevel: string
-      matchedWords: string[]
-    }
-  }
-  __position: number
 }
 
 interface ProductsState {
