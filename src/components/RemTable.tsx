@@ -59,13 +59,17 @@ export function RemTable () {
         throw new Error('No se pudo enviar la solicitud.')
       }
 
-      console.log(response)
-      return response.json()
+      const result = await response.json()
+      clearProducts()
+
+      return result
     } catch (error) {
-      if (error.name === 'ValidationError') {
+      if (error instanceof yup.ValidationError) {
         throw new Error(error.errors.join(', '))
-      } else {
+      } else if (error instanceof Error) {
         throw error
+      } else {
+        throw new Error('Unknown error occurred.')
       }
     }
   }
