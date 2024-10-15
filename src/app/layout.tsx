@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Navbar } from '@/components/Navbar'
-import { Raleway } from 'next/font/google'
+import { Inter } from 'next/font/google'
 
 export const metadata: Metadata = {
   title: 'REM - Diprofire Chile',
@@ -9,11 +9,11 @@ export const metadata: Metadata = {
     'Sistema de generación y gestión de solicitudes de requerimientos y materiales.'
 }
 
-const raleway = Raleway({
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   weight: ['400', '500', '600', '700', '800', '900'],
-  variable: '--font-raleway'
+  variable: '--font-inter'
 })
 
 export default function RootLayout ({
@@ -23,7 +23,7 @@ export default function RootLayout ({
 }>) {
   return (
     <html lang='es'>
-      <body className={`${raleway.className} antialiased`}>
+      <body className={`${inter.className} antialiased`}>
         <Navbar />
         {children}
       </body>
