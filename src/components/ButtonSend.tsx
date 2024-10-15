@@ -5,12 +5,7 @@ import { Button } from '@/components/ui/button'
 import { toast } from '@/hooks/use-toast'
 import { Toaster } from '@/components/ui/toaster'
 import { LoaderCircle } from 'lucide-react'
-
-interface ButtonSendProps {
-  children: React.ReactNode
-  variant?: 'default' | 'outline' | 'ghost' | 'link'
-  onClick: () => Promise<void>
-}
+import { ButtonSendProps } from '@/types/button-send'
 
 export const ButtonSend = ({
   children,
