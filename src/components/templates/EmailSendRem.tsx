@@ -1,19 +1,4 @@
-interface Product {
-  Product: string
-  SKU: string
-  Stock: number
-  Imagen: string
-  quantity: number
-}
-
-interface EmailSendRemProps {
-  name: string
-  email: string
-  date: string
-  ceco: string
-  message: string
-  products: Product[]
-}
+import { EmailSendRemProps } from "@/types/email-send-rem"
 
 export const EmailSendRem: React.FC<Readonly<EmailSendRemProps>> = ({
   name,
