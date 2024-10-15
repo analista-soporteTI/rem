@@ -24,6 +24,8 @@ import { useProducts } from '@/hooks/useProducts'
 import imgNotFound from '@/assets/not found.png'
 import { HitCardProps } from '@/types/hitcard'
 import { SuggestionItemProps } from '@/types/suggestion-item'
+import { Toaster } from '@/components/ui/toaster'
+import { toast } from '@/hooks/use-toast'
 
 const appId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID
 const searchKey = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY
@@ -34,6 +36,19 @@ const searchClient = algoliasearch(appId ?? '', searchKey ?? '')
 const HitCard = ({ hit }: HitCardProps) => {
   const { addProduct } = useProducts()
   const [quantity, setQuantity] = useState(1)
+
+  const handleAddProduct = () => {
+    addProduct({ ...hit, quantity: 0 }, quantity)
+    toast({
+      title: 'Producto añadido',
+      description: `${hit.Product}, ${quantity} ${
+        quantity > 1 ? 'unidades' : 'unidad'
+      }`,
+      variant: 'default',
+      duration: 1200,
+      className: 'shadow-none border-2 border-border'
+    })
+  }
 
   return (
     <Card key={hit.objectID} className='w-[290px]'>
@@ -59,9 +74,8 @@ const HitCard = ({ hit }: HitCardProps) => {
           onChange={e => setQuantity(Number(e.currentTarget.value))}
           min={1}
         />
-        <Button onClick={() => addProduct({ ...hit, quantity: 0 }, quantity)}>
-          Añadir a REM
-        </Button>
+        <Button onClick={handleAddProduct}>Añadir a REM</Button>
+        <Toaster />
       </CardFooter>
     </Card>
   )
@@ -132,8 +146,6 @@ const SearchSuggestions = ({
     </div>
   )
 }
-
-
 
 const SuggestionItem = ({
   hit,
