@@ -20,6 +20,7 @@ import { Trash } from 'lucide-react'
 import { ButtonSend } from '@/components/ButtonSend'
 import * as yup from 'yup'
 import imgNotFound from '@/assets/not found.png'
+import { Product } from '@/types/product'
 
 export function RemTable () {
   const { products, clearProducts, removeProduct } = useProducts()
@@ -28,6 +29,7 @@ export function RemTable () {
   const [ceco, setCeco] = useState('')
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
+  const { addProduct } = useProducts()
 
   const schema = yup.object().shape({
     email: yup
@@ -74,6 +76,13 @@ export function RemTable () {
     }
   }
 
+  const handleQuantityChange = (product: Product, quantity: string) => {
+    const updatedQuantity = parseInt(quantity, 10)
+    if (updatedQuantity >= 1) {
+      addProduct(product, updatedQuantity - product.quantity)
+    }
+  }
+
   return (
     <Table>
       <TableCaption>
@@ -104,7 +113,15 @@ export function RemTable () {
               </TableCell>
               <TableCell className='font-medium'>{product.SKU}</TableCell>
               <TableCell className='lowercase'>{product.Product}</TableCell>
-              <TableCell className='text-center'>{product.quantity}</TableCell>
+              <TableCell className='text-center'>
+                <Input
+                  type='number'
+                  placeholder='1'
+                  value={product.quantity}
+                  onChange={e => handleQuantityChange(product, e.target.value)}
+                  min={1}
+                />
+              </TableCell>
               <TableCell className='text-center'>{product.Stock}</TableCell>
               <TableCell className='text-center'>
                 <Button
@@ -151,7 +168,7 @@ export function RemTable () {
               <div>
                 <Input
                   type='text'
-                  placeholder='CeCo proyecto'
+                  placeholder='CeCo proyecto (XX-XXXX)'
                   value={ceco}
                   onChange={e => setCeco(e.target.value)}
                   className='w-full'
