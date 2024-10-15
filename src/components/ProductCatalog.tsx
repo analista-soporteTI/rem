@@ -22,22 +22,14 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useProducts } from '@/hooks/useProducts'
 import imgNotFound from '@/assets/not found.png'
+import { HitCardProps } from '@/types/hitcard'
+import { SuggestionItemProps } from '@/types/suggestion-item'
 
 const appId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID
 const searchKey = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY
 const indexName = process.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME
 
 const searchClient = algoliasearch(appId ?? '', searchKey ?? '')
-
-interface HitCardProps {
-  hit: {
-    objectID: string
-    Product: string
-    SKU: string
-    Stock: number
-    Imagen: string
-  }
-}
 
 const HitCard = ({ hit }: HitCardProps) => {
   const { addProduct } = useProducts()
@@ -141,11 +133,7 @@ const SearchSuggestions = ({
   )
 }
 
-type SuggestionItemProps = {
-  hit: { Product: string }
-  onClick: (product: string) => void
-  setShowSuggestions: (value: boolean) => void
-}
+
 
 const SuggestionItem = ({
   hit,
