@@ -1,4 +1,4 @@
-import { ProductCatalog } from '@/components/ProductCatalog'
+import { ProductCatalog } from '@/components/product/ProductCatalog'
 import { ArrowUp } from 'lucide-react'
 import Link from 'next/link'
 
@@ -11,7 +11,7 @@ export default function Home () {
       <ProductCatalog />
       <Link
         href='#customSearchAlgolia'
-        className='fixed bottom-12 left-1 z-40 w-fit p-1 border border-border rounded-xl bg-background group'
+        className='fixed bottom-12 right-4 z-40 w-fit p-1 border border-border rounded-xl bg-background group'
       >
         <ArrowUp
           size={24}
