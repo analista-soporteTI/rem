@@ -27,48 +27,41 @@ export const Navbar = () => {
   }
 
   return (
-    <header className='fixed top-0 z-50 w-full bg-background backdrop-blur-sm transition-all duration-200 ease-in-out'>
+    <header className='fixed top-0 z-50 w-full h-16 bg-background backdrop-blur-sm transition-all duration-200 ease-in-out'>
       <nav className='w-full max-w-7xl flex items-center justify-between gap-4 mx-auto px-4 py-2 sm:px-6 sm:py-4'>
-        <div className='flex items-center gap-4'>
-          <Link
-            href='/'
-            className='text-xl font-semibold flex items-center gap-2 hover:opacity-70 duration-200 ease-in-out'
-          >
-            <Image
-              src={logo}
-              alt='Diprofire Logo'
-              width={40}
-              height={40}
-              loading='lazy'
-              className='object-cover border rounded-full'
-            />
-            Diprofire
-          </Link>
-          <span className='text-sm font-semibold'>v1.0.0</span>
-        </div>
+        <Link
+          href='/'
+          className='text-xl font-semibold flex items-center gap-2 hover:opacity-70 duration-200 ease-in-out'
+        >
+          <Image
+            src={logo}
+            alt='Diprofire Logo'
+            width={40}
+            height={40}
+            loading='lazy'
+            className='object-cover border rounded-full bg-white'
+          />
+          Diprofire
+        </Link>
 
         <div className='hidden md:flex items-center gap-4'>
           <Link
             href='/'
-            className='font-medium flex items-center hover:opacity-70 duration-200 ease-in-out group'
-            onClick={toggleMenu}
+            className='font-medium hover:opacity-70 duration-200 ease-in-out'
           >
             Catálogo REM
-            <ArrowUpRight
-              size={16}
-              className='ml-1 group-hover:ml-2 group-hover:mb-1 duration-200 ease-in-out'
-            />
           </Link>
           <Link
             href='/rem'
-            className='font-medium flex items-center hover:opacity-70 duration-200 ease-in-out group'
-            onClick={toggleMenu}
+            className='font-medium hover:opacity-70 duration-200 ease-in-out'
           >
             Solicitud REM
-            <ArrowUpRight
-              size={16}
-              className='ml-1 group-hover:ml-2 group-hover:mb-1 duration-200 ease-in-out'
-            />
+          </Link>
+          <Link
+            href='/seguimiento'
+            className='font-medium hover:opacity-70 duration-200 ease-in-out'
+          >
+            Seguimiento REM
           </Link>
         </div>
 
@@ -87,25 +80,27 @@ export const Navbar = () => {
             <div className='flex flex-col items-center gap-4 py-4'>
               <Link
                 href='/'
-                className='font-medium flex items-center hover:opacity-70 duration-200 ease-in-out group'
+                className='font-medium hover:opacity-70 duration-200 ease-in-out'
                 onClick={toggleMenu}
               >
                 Catálogo REM
-                <ArrowUpRight
-                  size={16}
-                  className='ml-1 group-hover:ml-2 group-hover:mb-1 duration-200 ease-in-out'
-                />
+                <ArrowUpRight size={16} />
               </Link>
               <Link
                 href='/rem'
-                className='font-medium flex items-center hover:opacity-70 duration-200 ease-in-out group'
+                className='font-medium hover:opacity-70 duration-200 ease-in-out'
                 onClick={toggleMenu}
               >
                 Solicitud REM
-                <ArrowUpRight
-                  size={16}
-                  className='ml-1 group-hover:ml-2 group-hover:mb-1 duration-200 ease-in-out'
-                />
+                <ArrowUpRight size={16} />
+              </Link>
+              <Link
+                href='/seguimiento'
+                className='font-medium hover:opacity-70 duration-200 ease-in-out'
+                onClick={toggleMenu}
+              >
+                Seguimiento REM
+                <ArrowUpRight size={16} />
               </Link>
             </div>
           </div>
