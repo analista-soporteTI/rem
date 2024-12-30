@@ -1,6 +1,10 @@
 'use client'
 
+import { useProducts } from '@/hooks/useProducts'
+import { fetchUser } from '@/lib/db/fetchUser'
+import { Product } from '@/types/product'
 import { useState } from 'react'
+import { Card, CardContent } from '@/components/ui/card'
 import {
   Table,
   TableBody,
@@ -9,17 +13,10 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { Input } from '@/components/ui/input'
-import { useProducts } from '@/hooks/useProducts'
-import { Textarea } from '@/components/ui/textarea'
-import { DatePicker } from '@/components/ui/datepicker'
-import { Trash } from 'lucide-react'
-import { ButtonSend } from '@/components/ButtonSend'
-import * as yup from 'yup'
-import imgNotFound from '@/assets/not found.png'
-import { Product } from '@/types/product'
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -27,9 +24,12 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import { fetchUser } from '@/lib/db/fetchUser'
-import { Label } from '@/components/ui/label'
-import { Card, CardContent } from '@/components/ui/card'
+import { DatePicker } from '@/components/ui/datepicker'
+import { Textarea } from '@/components/ui/textarea'
+import { ButtonSend } from '@/components/ButtonSend'
+import imgNotFound from '@/assets/not found.png'
+import { Trash } from 'lucide-react'
+import * as yup from 'yup'
 
 export const RequestTable = () => {
   const {
@@ -40,13 +40,13 @@ export const RequestTable = () => {
     addCustomProduct,
     removeCustomProduct,
     updateCustomProduct,
-    clearCustomProducts
+    clearCustomProducts,
+    addProduct
   } = useProducts()
   const [userId, setUserId] = useState('')
   const [ceco, setCeco] = useState('')
   const [dateRequest, setDateRequest] = useState(new Date())
   const [message, setMessage] = useState('')
-  const { addProduct } = useProducts()
 
   const schema = yup.object().shape({
     userId: yup.number().required('El usuario es requerido'),
