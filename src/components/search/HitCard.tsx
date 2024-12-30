@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import {
@@ -9,13 +8,11 @@ import {
   CardContent,
   CardDescription,
   CardFooter,
-  CardHeader,
   CardTitle
 } from '@/components/ui/card'
 import { Toaster } from '@/components/ui/toaster'
 import { toast } from '@/hooks/use-toast'
 import { useProducts } from '@/hooks/useProducts'
-import imgNotFound from '@/assets/not found.png'
 import { HitCardProps } from '@/types/hitcard'
 
 export const HitCard = ({ hit }: HitCardProps) => {
@@ -36,37 +33,34 @@ export const HitCard = ({ hit }: HitCardProps) => {
   }
 
   return (
-    <Card key={hit.objectID} className='w-[290px]'>
-      <CardHeader>
-        <Image
-          src={hit.Imagen || imgNotFound}
-          alt={`Imagen referencial del producto ${hit.Product}`}
-          width={120}
-          height={120}
-          className='mx-auto'
-        />
-      </CardHeader>
-      <CardContent>
-        <CardTitle className='text-base mb-2'>
+    <Card
+      key={hit.objectID}
+      className='w-[290px] hover:shadow-lg transition-shadow duration-200'
+    >
+      <CardContent className='p-4 space-y-2'>
+        <CardTitle className='text-base font-semibold line-clamp-2'>
           {hit.Product}
         </CardTitle>
-        <CardDescription className='border-t pt-2'>
-          SKU: {hit.SKU}
+        <CardDescription className='flex flex-col pt-2 border-t border-gray-200 text-muted-foreground'>
+          <span>SKU: {hit.SKU}</span>
+          <span>Stock: {hit.Stock} und.</span>
         </CardDescription>
-        <p className='text-sm text-muted-foreground'>
-          Stock disponible: {hit.Stock} und.
-        </p>
       </CardContent>
-      <CardFooter className='flex justify-between gap-4'>
+      <CardFooter className='px-4 py-4 bg-gray-50 border-t flex items-center justify-between gap-3'>
         <Input
           type='number'
           placeholder='1'
-          className='max-w-[80px]'
+          className='w-24 text-center'
           value={quantity}
           onChange={e => setQuantity(Number(e.currentTarget.value))}
           min={1}
         />
-        <Button onClick={handleAddProduct}>Añadir a REM</Button>
+        <Button
+          onClick={handleAddProduct}
+          className='flex-1 bg-primary hover:bg-primary/90'
+        >
+          Añadir a REM
+        </Button>
         <Toaster />
       </CardFooter>
     </Card>
