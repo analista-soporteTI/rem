@@ -1,45 +1,48 @@
-import { EmailSendRem } from '@/components/templates/EmailSendRem'
+import { insertRem } from '@/lib/db/insertRem'
+import { sendEmail } from '@/lib/email'
 import { generateUniqueCode } from '@/utils/generateUniqueCode'
-import { Resend } from 'resend'
-import { v4 as uuidv4 } from 'uuid'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST (request: Request) {
   try {
-    const { name, email, date, ceco, message, products } = await request.json()
+    const { userId, name, email, dateRequest, ceco, message, products, customProducts } =
+      await request.json()
 
-    const uniqueCode = generateUniqueCode(ceco)
+    const formattedDateSend = new Date()
+    const formattedDateRequest = new Date(dateRequest)
 
-    const formattedDate = new Date(date).toLocaleDateString('es-CL', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    })
+    const rem_code = generateUniqueCode()
 
-    const { data, error } = await resend.emails.send({
-      from: 'Rem web <diprofire@diprofire.cl>',
-      to: ['compras.diprofire@gmail.com'],
-      subject: `REM ${uniqueCode}`,
-      react: EmailSendRem({
-        name,
-        email,
-        date: formattedDate,
-        ceco,
-        message,
-        products
-      }),
-      headers: {
-        'X-Entity-Ref-ID': uuidv4()
-      }
-    })
+    await sendEmail(
+      rem_code,
+      name,
+      email,
+      formattedDateRequest,
+      ceco,
+      message,
+      products,
+      customProducts
+    )
 
-    if (error) {
-      return Response.json({ error }, { status: 500 })
-    }
+    await insertRem(
+      rem_code,
+      ceco,
+      formattedDateSend,
+      formattedDateRequest,
+      message,
+      userId,
+      products,
+      customProducts
+    )
 
-    return Response.json(data)
+    return Response.json(
+      { message: 'Solicitud procesada con éxito.' },
+      { status: 200 }
+    )
   } catch (error) {
-    return Response.json({ error }, { status: 500 })
+    console.error(error)
+    return Response.json(
+      { error: 'Error al procesar la solicitud' },
+      { status: 500 }
+    )
   }
 }

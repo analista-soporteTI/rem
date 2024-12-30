@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 
-export const generateUniqueCode = (prefix: string) => {
+export const generateUniqueCode = () => {
   const uuid = uuidv4()
 
   const letters = uuid.replace(/[^a-zA-Z]/g, '')
@@ -9,5 +9,5 @@ export const generateUniqueCode = (prefix: string) => {
   const twoLetters = letters.slice(0, 2).toUpperCase()
   const fourNumbers = numbers.slice(0, 4)
 
-  return `${prefix}_${twoLetters}${fourNumbers}`
+  return `${twoLetters}${fourNumbers}`
 }
