@@ -31,7 +31,7 @@ import { fetchUser } from '@/lib/db/fetchUser'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent } from '@/components/ui/card'
 
-export function RequestTable () {
+export const RequestTable = () => {
   const {
     products,
     clearProducts,

@@ -21,7 +21,7 @@ interface RemCatalogProps {
 const ITEMS_PER_PAGE = 12
 const REFRESH_INTERVAL = 10 * 60 * 1000
 
-export function RemCatalog ({ data }: RemCatalogProps) {
+export const RemCatalog = ({ data }: RemCatalogProps) => {
   const [loading, setLoading] = useState(true)
   const [showPendingOnly, setShowPendingOnly] = useState(true)
   const { rems, setRems, pinRem, unpinRem, isPinned } = useRems()
