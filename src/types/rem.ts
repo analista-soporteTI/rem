@@ -1,5 +1,3 @@
-import { CustomProduct } from "@/types/product"
-
 export interface Rem {
   rem_code: any
   user_id: any
@@ -9,5 +7,5 @@ export interface Rem {
   status: any
   message: any
   products: any
-  custom_products: CustomProduct[]
+  custom_products: any
 }
