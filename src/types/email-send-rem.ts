@@ -1,10 +1,12 @@
-import { Product } from "@/types/product"
+import { Product, CustomProduct } from '@/types/product'
 
 export interface EmailSendRemProps {
+  rem_code: string
   name: string
   email: string
-  date: string
+  dateRequest: Date
   ceco: string
   message: string
   products: Product[]
+  customProducts: CustomProduct[]
 }
