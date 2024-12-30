@@ -1,4 +1,4 @@
-import { RemTable } from '@/components/RemTable'
+import { RequestTable } from '@/components/RequestTable'
 
 export default function Rem () {
   return (
@@ -6,7 +6,7 @@ export default function Rem () {
       <h1 id='titleGallery' className='text-3xl font-bold text-start mb-6'>
         Revisa tu solicitud <span className='text-green-600'>REM</span>
       </h1>
-      <RemTable />
+      <RequestTable />
     </main>
   )
 }
