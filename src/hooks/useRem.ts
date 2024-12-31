@@ -3,7 +3,6 @@
 import { Rem } from '@/types/rem'
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-import { immer } from 'zustand/middleware/immer'
 
 type RemId = string
 
@@ -27,54 +26,63 @@ interface RemsActions {
 
 const useRemsStore = create<RemsState & RemsActions>()(
   persist(
-    immer((set, get) => ({
+    (set, get) => ({
       rems: {},
       pinnedRems: new Set<RemId>(),
 
       addRems: newRems =>
-        set(state => {
-          newRems.forEach(rem => {
-            if (!state.rems[rem.rem_code]) {
-              state.rems[rem.rem_code] = rem
-            }
-          })
-        }),
+        set(state => ({
+          rems: {
+            ...state.rems,
+            ...newRems.reduce((acc, rem) => {
+              if (!state.rems[rem.rem_code]) {
+                acc[rem.rem_code] = rem
+              }
+              return acc
+            }, {} as Record<RemId, Rem>)
+          }
+        })),
 
       updateRem: rem =>
-        set(state => {
-          if (state.rems[rem.rem_code]) {
-            state.rems[rem.rem_code] = { ...state.rems[rem.rem_code], ...rem }
+        set(state => ({
+          rems: {
+            ...state.rems,
+            [rem.rem_code]: {
+              ...state.rems[rem.rem_code],
+              ...rem
+            }
           }
-        }),
+        })),
 
       removeRem: remId =>
         set(state => {
-          delete state.rems[remId]
-          state.pinnedRems.delete(remId)
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { [remId]: _, ...rest } = state.rems
+          const newPinnedRems = new Set(state.pinnedRems)
+          newPinnedRems.delete(remId)
+          return { rems: rest, pinnedRems: newPinnedRems }
         }),
 
-      clearRems: () =>
-        set(state => {
-          state.rems = {}
-          state.pinnedRems.clear()
-        }),
+      clearRems: () => set({ rems: {}, pinnedRems: new Set<RemId>() }),
 
       setRems: rems =>
-        set(state => {
-          state.rems = rems.reduce((acc, rem) => {
+        set({
+          rems: rems.reduce((acc, rem) => {
             acc[rem.rem_code] = rem
             return acc
           }, {} as Record<RemId, Rem>)
         }),
 
       pinRem: remId =>
-        set(state => {
-          state.pinnedRems.add(remId)
-        }),
+        set(state => ({
+          pinnedRems: new Set(state.pinnedRems).add(remId)
+        })),
 
       unpinRem: remId =>
         set(state => {
-          state.pinnedRems.delete(remId)
+          const newPinnedRems = new Set(state.pinnedRems)
+          newPinnedRems.delete(remId)
+          return { pinnedRems: newPinnedRems }
         }),
 
       isPinned: remId => get().pinnedRems.has(remId),
@@ -87,7 +95,7 @@ const useRemsStore = create<RemsState & RemsActions>()(
           .map(id => rems[id])
           .filter(Boolean)
       }
-    })),
+    }),
     {
       name: 'rems-storage',
       storage: createJSONStorage(() => localStorage),
@@ -98,7 +106,7 @@ const useRemsStore = create<RemsState & RemsActions>()(
       merge: (persistedState: any, currentState) => ({
         ...currentState,
         ...persistedState,
-        pinnedRems: new Set(persistedState.pinnedRems)
+        pinnedRems: new Set(persistedState.pinnedRems || [])
       })
     }
   )

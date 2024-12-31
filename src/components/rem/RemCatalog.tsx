@@ -24,7 +24,7 @@ const REFRESH_INTERVAL = 10 * 60 * 1000
 export const RemCatalog = ({ data }: RemCatalogProps) => {
   const [loading, setLoading] = useState(true)
   const [showPendingOnly, setShowPendingOnly] = useState(true)
-  const { rems, setRems, pinRem, unpinRem, isPinned } = useRems()
+  const { rems, setRems, clearRems, pinRem, unpinRem, isPinned } = useRems()
   const [remCode, setRemCode] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -35,12 +35,13 @@ export const RemCatalog = ({ data }: RemCatalogProps) => {
 
   const fetchData = useCallback(async () => {
     try {
+      clearRems()
       const newRems = await fetchRem()
       setRems(newRems)
     } catch (error) {
       console.error('Failed to fetch rems:', error)
     }
-  }, [setRems])
+  }, [clearRems, setRems])
 
   useEffect(() => {
     fetchData()
@@ -55,9 +56,10 @@ export const RemCatalog = ({ data }: RemCatalogProps) => {
       return
     }
 
+    clearRems()
     setRems(data)
     setLoading(false)
-  }, [data, setRems])
+  }, [data, setRems, clearRems])
 
   const handlePinToggle = useCallback(
     (remCode: string) => {
@@ -103,6 +105,7 @@ export const RemCatalog = ({ data }: RemCatalogProps) => {
   const handleRefresh = useCallback(async () => {
     setLoading(true)
     try {
+      clearRems()
       const newRems = await fetchRem()
       setRems(newRems)
     } catch (error) {
@@ -110,7 +113,7 @@ export const RemCatalog = ({ data }: RemCatalogProps) => {
     } finally {
       setLoading(false)
     }
-  }, [setRems])
+  }, [setRems, clearRems])
 
   const togglePendingFilter = useCallback(() => {
     setShowPendingOnly(prev => !prev)
