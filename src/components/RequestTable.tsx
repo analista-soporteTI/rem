@@ -13,7 +13,6 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import Image from 'next/image'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -27,7 +26,6 @@ import {
 import { DatePicker } from '@/components/ui/datepicker'
 import { Textarea } from '@/components/ui/textarea'
 import { ButtonSend } from '@/components/ButtonSend'
-import imgNotFound from '@/assets/not found.png'
 import { Trash } from 'lucide-react'
 import * as yup from 'yup'
 
@@ -144,7 +142,6 @@ export const RequestTable = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className='w-[80px]'>Imagen</TableHead>
                 <TableHead className='w-[120px]'>SKU</TableHead>
                 <TableHead className='min-w-[200px] w-[400px]'>
                   Producto
@@ -160,16 +157,6 @@ export const RequestTable = () => {
               {products.length > 0 ? (
                 products.map(product => (
                   <TableRow key={product.SKU}>
-                    <TableCell className='text-center'>
-                      <div className='relative w-10 h-10 mx-auto'>
-                        <Image
-                          src={product.Imagen || imgNotFound}
-                          alt='product'
-                          fill
-                          className='object-contain'
-                        />
-                      </div>
-                    </TableCell>
                     <TableCell className='font-medium'>{product.SKU}</TableCell>
                     <TableCell>{product.Product}</TableCell>
                     <TableCell className='text-center'>
