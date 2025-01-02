@@ -5,14 +5,16 @@ import {
   CalendarArrowUp,
   CircleDollarSign,
   Download,
+  ListTodoIcon,
   LoaderCircle,
   Pin,
   PinOff
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { useState } from 'react'
 import { Rem } from '@/types/rem'
 import clsx from 'clsx'
+import Link from 'next/link'
 
 interface RemCardProps {
   rem: Rem
@@ -126,8 +128,20 @@ export const RemCard = ({ rem, isPinned, pinRem }: RemCardProps) => {
           </p>
         </div>
 
+        <Link
+          href={`/seguimiento/${rem.rem_code}`}
+          className={buttonVariants({
+            variant: 'outline',
+            size: 'sm',
+            className: 'w-full mb-2'
+          })}
+        >
+          <ListTodoIcon className='mr-2 size-4' />
+          Ver solicitud
+        </Link>
+
         <Button
-          variant='outline'
+          variant='default'
           size='sm'
           onClick={handleDownloadExcel}
           disabled={downloading}
@@ -140,8 +154,8 @@ export const RemCard = ({ rem, isPinned, pinRem }: RemCardProps) => {
             </span>
           ) : (
             <span className='flex items-center gap-2'>
-              Descargar Excel
               <Download className='size-4' />
+              Descargar Excel
             </span>
           )}
         </Button>
