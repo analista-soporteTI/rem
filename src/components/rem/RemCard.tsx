@@ -3,12 +3,17 @@ import { Card, CardContent } from '@/components/ui/card'
 import {
   CalendarArrowDown,
   CalendarArrowUp,
+  CheckCircle,
   CircleDollarSign,
+  Clock,
   Download,
+  Info,
   ListTodoIcon,
   LoaderCircle,
+  MessageSquareWarning,
   Pin,
-  PinOff
+  PinOff,
+  XCircle
 } from 'lucide-react'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { useState } from 'react'
@@ -87,6 +92,29 @@ export const RemCard = ({ rem, isPinned, pinRem }: RemCardProps) => {
     }
   }
 
+  const status = {
+    'Pendiente Aprobación': {
+      icon: <MessageSquareWarning className='size-4 text-purple-600' />,
+      style: 'text-purple-600'
+    },
+    Pendiente: {
+      icon: <Info className='size-4 text-yellow-600' />,
+      style: 'text-yellow-600'
+    },
+    'En Proceso': {
+      icon: <Clock className='size-4 text-blue-600' />,
+      style: 'text-blue-600'
+    },
+    Completado: {
+      icon: <CheckCircle className='size-4 text-green-600' />,
+      style: 'text-green-600'
+    },
+    Anulado: {
+      icon: <XCircle className='size-4 text-red-600' />,
+      style: 'text-red-600'
+    }
+  }
+
   return (
     <Card
       className={clsx(
@@ -125,6 +153,12 @@ export const RemCard = ({ rem, isPinned, pinRem }: RemCardProps) => {
           <p className='flex items-center gap-2'>
             <CalendarArrowUp className='size-4 text-gray-500' />
             <span>Entrega: {formattedDateRequest}</span>
+          </p>
+          <p className='flex items-center gap-2'>
+            {status[rem.status as keyof typeof status].icon}
+            <span className={status[rem.status as keyof typeof status].style}>
+              Estado: {rem.status}
+            </span>
           </p>
         </div>
 

@@ -5,7 +5,7 @@ import { z } from 'zod'
 
 const StatusSchema = z.object({
   remCode: z.string(),
-  status: z.enum(['Pendiente', 'En Proceso', 'Completado', 'Anulado'])
+  status: z.enum(['Pendiente Aprobación', 'Pendiente', 'En Proceso', 'Completado', 'Anulado'])
 })
 
 export async function PATCH (request: Request) {
