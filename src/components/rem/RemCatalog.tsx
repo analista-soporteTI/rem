@@ -25,11 +25,11 @@ export const RemCatalog = ({ data }: RemCatalogProps) => {
   const [loading, setLoading] = useState(true)
   const [showPendingOnly, setShowPendingOnly] = useState(true)
   const { rems, setRems, clearRems, pinRem, unpinRem, isPinned } = useRems()
-  const [remCode, setRemCode] = useState('')
+  const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
 
-  const debouncedSetRemCode = useMemo(
-    () => debounce((value: string) => setRemCode(value), 300),
+  const debouncedSearch = useMemo(
+    () => debounce((value: string) => setSearch(value), 300),
     []
   )
 
@@ -80,9 +80,12 @@ export const RemCatalog = ({ data }: RemCatalogProps) => {
     }
 
     const filtered = rems.filter(rem => {
-      const codeMatch = rem.rem_code.includes(remCode.toUpperCase())
+      const searchMatch =
+        rem.rem_code.includes(search.toUpperCase()) ||
+        rem.ceco.includes(search.toUpperCase())
+
       const statusMatch = showPendingOnly ? rem.status === 'Pendiente' : true
-      return codeMatch && statusMatch
+      return searchMatch && statusMatch
     })
 
     const sortedItems = filtered.sort(sortBySolicitud)
@@ -91,7 +94,7 @@ export const RemCatalog = ({ data }: RemCatalogProps) => {
     const unpinnedItems = sortedItems.filter(rem => !isPinned(rem.rem_code))
 
     return [...pinnedItems, ...unpinnedItems]
-  }, [rems, remCode, showPendingOnly, isPinned])
+  }, [rems, search, showPendingOnly, isPinned])
 
   const paginatedRems = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
@@ -135,8 +138,8 @@ export const RemCatalog = ({ data }: RemCatalogProps) => {
           <Input
             type='text'
             id='remCodeFilter'
-            placeholder='Filtrar por código de solicitud (ejemplo: AA5555)'
-            onChange={e => debouncedSetRemCode(e.target.value)}
+            placeholder='Filtrar por código o CeCo de solicitud'
+            onChange={e => debouncedSearch(e.target.value)}
             className='w-full'
           />
         </Label>
