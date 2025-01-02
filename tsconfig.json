@@ -42,6 +42,9 @@
       ],
       "@/types/*": [
         "./src/types/*"
+      ],
+      "@/services/*": [
+        "./src/services/*"
       ]
     },
     "target": "ES2017"
