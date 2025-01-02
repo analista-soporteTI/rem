@@ -23,7 +23,7 @@ const REFRESH_INTERVAL = 10 * 60 * 1000
 
 export const RemCatalog = ({ data }: RemCatalogProps) => {
   const [loading, setLoading] = useState(true)
-  const [showPendingOnly, setShowPendingOnly] = useState(true)
+  const [showPendingOnly, setShowPendingOnly] = useState(false)
   const { rems, setRems, clearRems, pinRem, unpinRem, isPinned } = useRems()
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -155,7 +155,7 @@ export const RemCatalog = ({ data }: RemCatalogProps) => {
 
         <Button
           onClick={togglePendingFilter}
-          variant={showPendingOnly ? 'secondary' : 'default'}
+          variant={showPendingOnly ? 'default' : 'secondary'}
         >
           {showPendingOnly ? 'Mostrar todos' : 'Mostrar pendientes'}
         </Button>
