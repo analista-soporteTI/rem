@@ -119,7 +119,7 @@ export const RemCard = ({ rem, isPinned, pinRem }: RemCardProps) => {
     <Card
       className={clsx(
         'w-[280px] border shadow-sm hover:shadow-md transition-shadow',
-        rem.status === 'Completado'
+        rem.status === 'Completado' || rem.status === 'Anulado'
           ? 'opacity-60 bg-primary-foreground hover:opacity-100 transition-all'
           : ''
       )}
@@ -142,7 +142,9 @@ export const RemCard = ({ rem, isPinned, pinRem }: RemCardProps) => {
         <div className='flex flex-col gap-2 mb-4 text-sm'>
           <p className='flex items-center gap-2'>
             <CircleDollarSign className='size-4 text-gray-500' />
-            <span className='text-gray-700'>CeCo: {rem.ceco}</span>
+            <span className='text-gray-700'>
+              CeCo: <span className='uppercase'>{rem.ceco}</span>
+            </span>
           </p>
           <p className='flex items-center gap-2'>
             <CalendarArrowDown className='size-4 text-gray-500' />

@@ -48,7 +48,7 @@ export const RemDetailInfo = ({
       <CardContent className='grid gap-4'>
         <div>
           <p className='text-sm font-medium text-gray-500'>Centro de costo</p>
-          <p className='mt-1 font-medium'>{ceco}</p>
+          <p className='mt-1 font-medium uppercase'>{ceco}</p>
         </div>
         <div>
           <p className='text-sm font-medium text-gray-500'>Fecha de entrega</p>
