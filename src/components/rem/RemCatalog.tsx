@@ -84,7 +84,9 @@ export const RemCatalog = ({ data }: RemCatalogProps) => {
         rem.rem_code.includes(search.toUpperCase()) ||
         rem.ceco.includes(search.toUpperCase())
 
-      const statusMatch = showPendingOnly ? rem.status === 'Pendiente' : true
+      const statusMatch = showPendingOnly
+        ? rem.status === 'Pendiente' || rem.status === 'En Proceso'
+        : true
       return searchMatch && statusMatch
     })
 
