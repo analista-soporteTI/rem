@@ -22,19 +22,6 @@ export async function POST (request: Request) {
 
     const rem_code = generateUniqueCode()
 
-    await sendEmail(
-      rem_code,
-      name,
-      email,
-      formattedDateRequest,
-      ceco,
-      message,
-      products,
-      customProducts,
-      delivery,
-      currency
-    )
-
     await insertRem(
       rem_code,
       ceco,
@@ -42,6 +29,19 @@ export async function POST (request: Request) {
       formattedDateRequest,
       message,
       userId,
+      products,
+      customProducts,
+      delivery,
+      currency
+    )
+
+    await sendEmail(
+      rem_code,
+      name,
+      email,
+      formattedDateRequest,
+      ceco,
+      message,
       products,
       customProducts,
       delivery,
