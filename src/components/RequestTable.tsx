@@ -265,6 +265,7 @@ export const RequestTable = () => {
                   <SelectItem value='11'>María Gomez</SelectItem>
                   <SelectItem value='12'>Felipe Azolas</SelectItem>
                   <SelectItem value='13'>Arnaldo Gonzalez</SelectItem>
+                  <SelectItem value='14'>Natanael Alviña</SelectItem>
                 </SelectContent>
               </Select>
               <p className='text-sm text-muted-foreground'>
