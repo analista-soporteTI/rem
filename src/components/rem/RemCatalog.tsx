@@ -23,7 +23,7 @@ const REFRESH_INTERVAL = 10 * 60 * 1000
 
 export const RemCatalog = ({ data }: RemCatalogProps) => {
   const [loading, setLoading] = useState(true)
-  const [showPendingOnly, setShowPendingOnly] = useState(false)
+  const [showPendingOnly, setShowPendingOnly] = useState(true)
   const { rems, setRems, clearRems, pinRem, unpinRem, isPinned } = useRems()
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -73,24 +73,24 @@ export const RemCatalog = ({ data }: RemCatalogProps) => {
   )
 
   const filteredAndSortedRems = useMemo(() => {
-    const sortBySolicitud = (a: Rem, b: Rem) => {
-      const getNumber = (code: string) =>
-        parseInt(code.replace(/[^0-9]/g, '')) || 0
-      return getNumber(b.rem_code) - getNumber(a.rem_code)
-    }
-
     const filtered = rems.filter(rem => {
       const searchMatch =
         rem.rem_code.includes(search.toUpperCase()) ||
         rem.ceco.includes(search.toUpperCase())
 
       const statusMatch = showPendingOnly
-        ? rem.status === 'Pendiente' || rem.status === 'En Proceso'
+        ? rem.status === 'Pendiente' ||
+          rem.status === 'En Proceso' ||
+          rem.status === 'Pendiente Aprobación'
         : true
       return searchMatch && statusMatch
     })
 
-    const sortedItems = filtered.sort(sortBySolicitud)
+    const sortedItems = filtered.sort((a, b) => {
+      const dateA = new Date(a.date_send).getTime()
+      const dateB = new Date(b.date_send).getTime()
+      return dateB - dateA
+    })
 
     const pinnedItems = sortedItems.filter(rem => isPinned(rem.rem_code))
     const unpinnedItems = sortedItems.filter(rem => !isPinned(rem.rem_code))
