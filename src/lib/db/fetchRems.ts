@@ -50,7 +50,9 @@ export async function fetchRem () {
       message: rem.message,
       user_id: rem.user_id,
       products: detailedProducts,
-      custom_products: formattedCustomProducts
+      custom_products: formattedCustomProducts,
+      delivery: rem.delivery,
+      currency: rem.currency
     }
 
     return {

@@ -42,6 +42,8 @@ export const RemDetail = ({ rem, user }: RemDetailProps) => {
           dateSend={rem.date_send}
           dateRequest={rem.date_request}
           ceco={rem.ceco}
+          delivery={rem.delivery}
+          currency={rem.currency}
         />
         <RemDetailProducts
           products={rem.products}

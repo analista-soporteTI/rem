@@ -1,4 +1,4 @@
-import { Calendar, Building2, FileText } from 'lucide-react'
+import { Calendar, Building2, FileText, DollarSign } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface RemDetailInfoProps {
@@ -6,13 +6,17 @@ interface RemDetailInfoProps {
   dateSend: string
   dateRequest: string
   ceco: string
+  delivery: number
+  currency: string
 }
 
 export const RemDetailInfo = ({
   remCode,
   dateSend,
   dateRequest,
-  ceco
+  ceco,
+  delivery,
+  currency
 }: RemDetailInfoProps) => (
   <div className='grid gap-6 md:grid-cols-2'>
     <Card>
@@ -36,6 +40,19 @@ export const RemDetailInfo = ({
             <span>{dateSend}</span>
           </p>
         </div>
+        {currency !== 'N/A' && (
+          <div>
+            <p className='text-sm font-medium text-gray-500'>
+              Costo total de envío:
+            </p>
+            <p className='mt-1 flex items-center gap-2'>
+              <DollarSign className='h-4 w-4 text-gray-400' />
+              <span>
+                {delivery} {currency}
+              </span>
+            </p>
+          </div>
+        )}
       </CardContent>
     </Card>
     <Card>
