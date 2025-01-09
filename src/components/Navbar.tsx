@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import logo from '@/assets/logo.png'
-import { ArrowUpRight, Menu } from 'lucide-react'
+import { Menu } from 'lucide-react'
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -63,6 +63,12 @@ export const Navbar = () => {
           >
             Seguimiento REM
           </Link>
+          <Link
+            href='/inspections'
+            className='font-medium hover:opacity-70 duration-200 ease-in-out'
+          >
+            Inspecciones
+          </Link>
         </div>
 
         <div className='md:hidden'>
@@ -84,7 +90,6 @@ export const Navbar = () => {
                 onClick={toggleMenu}
               >
                 Catálogo REM
-                <ArrowUpRight size={16} />
               </Link>
               <Link
                 href='/rem'
@@ -92,7 +97,6 @@ export const Navbar = () => {
                 onClick={toggleMenu}
               >
                 Solicitud REM
-                <ArrowUpRight size={16} />
               </Link>
               <Link
                 href='/seguimiento'
@@ -100,7 +104,13 @@ export const Navbar = () => {
                 onClick={toggleMenu}
               >
                 Seguimiento REM
-                <ArrowUpRight size={16} />
+              </Link>
+              <Link
+                href='/inspections'
+                className='font-medium hover:opacity-70 duration-200 ease-in-out'
+                onClick={toggleMenu}
+              >
+                Inspecciones
               </Link>
             </div>
           </div>
