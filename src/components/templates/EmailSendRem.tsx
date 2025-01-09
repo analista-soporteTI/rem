@@ -8,7 +8,9 @@ export const EmailSendRem: React.FC<Readonly<EmailSendRemProps>> = ({
   ceco,
   message,
   products,
-  customProducts
+  customProducts,
+  delivery,
+  currency
 }) => {
   const formattedDateRequest = dateRequest.toLocaleDateString('es-CL', {
     day: '2-digit',
@@ -61,6 +63,12 @@ export const EmailSendRem: React.FC<Readonly<EmailSendRemProps>> = ({
             <tr>
               <td style={{ fontWeight: 'bold' }}>CeCo:</td>
               <td>{ceco}</td>
+            </tr>
+            <tr>
+              <td style={{ fontWeight: 'bold' }}>Costo total del envío:</td>
+              <td>
+                {delivery} {currency}
+              </td>
             </tr>
             <tr>
               <td style={{ fontWeight: 'bold', verticalAlign: 'top' }}>

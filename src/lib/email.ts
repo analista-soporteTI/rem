@@ -12,7 +12,9 @@ export const sendEmail = async (
   ceco: string,
   message: string,
   products: any,
-  customProducts: any
+  customProducts: any,
+  delivery: number,
+  currency: string
 ) => {
   const { data, error } = await resend.emails.send({
     from: 'Rem web <diprofire@diprofire.cl>',
@@ -25,7 +27,8 @@ export const sendEmail = async (
       'gino.rojas@diprofire.cl',
       'rodrigo.latorre@diprofire.cl',
       'kevin.villarroel@diprofire.cl',
-      'victor.rojas@diprofire.cl'
+      'victor.rojas@diprofire.cl',
+      'paulina.gutierrez@diprofire.cl'
     ],
     subject: `REM ${rem_code}`,
     react: EmailSendRem({
@@ -36,7 +39,9 @@ export const sendEmail = async (
       ceco,
       message,
       products,
-      customProducts
+      customProducts,
+      delivery,
+      currency
     }),
     headers: {
       'X-Entity-Ref-ID': uuidv4()

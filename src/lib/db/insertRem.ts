@@ -9,7 +9,9 @@ export const insertRem = async (
   message: string,
   userId: number,
   products: any[],
-  customProducts: CustomProduct[]
+  customProducts: CustomProduct[],
+  delivery: number,
+  currency: string
 ) => {
   const turso = await getTursoClient()
   let transactionStarted = false
@@ -19,8 +21,8 @@ export const insertRem = async (
     transactionStarted = true
 
     const remsQuery = `
-      INSERT INTO rems (rem_code, ceco, date_send, date_request, message, status, user_id)
-      VALUES (?, ?, ?, ?, ?, ?, ?);
+      INSERT INTO rems (rem_code, ceco, date_send, date_request, message, status, user_id, delivery, currency)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
     `
 
     const remsParams = [
@@ -30,7 +32,9 @@ export const insertRem = async (
       dateRequest.toISOString().split('T')[0],
       message,
       'Pendiente',
-      userId
+      userId,
+      delivery,
+      currency
     ]
 
     await turso.execute({

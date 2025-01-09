@@ -43,6 +43,8 @@ export const RequestTable = () => {
   } = useProducts()
   const [userId, setUserId] = useState('')
   const [ceco, setCeco] = useState('')
+  const [delivery, setDelivery] = useState(0)
+  const [currency, setCurrency] = useState('CLP')
   const [dateRequest, setDateRequest] = useState(new Date())
   const [message, setMessage] = useState('')
 
@@ -68,7 +70,9 @@ export const RequestTable = () => {
           .required(),
         type: yup.string().equals(['custom'])
       })
-    )
+    ),
+    delivery: yup.number().required('El costo del envío es requerido'),
+    currency: yup.string()
   })
 
   const handleSendRequest = async () => {
@@ -86,7 +90,9 @@ export const RequestTable = () => {
       ceco,
       message,
       products,
-      customProducts
+      customProducts,
+      delivery,
+      currency
     }
 
     try {
@@ -281,10 +287,40 @@ export const RequestTable = () => {
               />
             </div>
 
+            {userId === '8' && (
+              <>
+                <div className='space-y-2 col-span-1'>
+                  <Label>Costo total del envío ({currency})</Label>
+                  <Input
+                    type='number'
+                    min={0}
+                    value={delivery}
+                    onChange={e => setDelivery(Number(e.target.value))}
+                  />
+                </div>
+                <div className='flex items-end col-span-1'>
+                  <Button
+                    variant={currency === 'CLP' ? 'default' : 'ghost'}
+                    onClick={() => setCurrency('CLP')}
+                    className='rounded-r-none'
+                  >
+                    CLP
+                  </Button>
+                  <Button
+                    variant={currency === 'USD' ? 'default' : 'ghost'}
+                    onClick={() => setCurrency('USD')}
+                    className='rounded-l-none'
+                  >
+                    USD
+                  </Button>
+                </div>
+              </>
+            )}
+
             <div className='md:col-span-2 space-y-2'>
               <Label>Comentarios de la solicitud</Label>
               <Textarea
-                placeholder='Indique cualquier situación, situación o información adicional que consideres necesaria para el requerimiento.'
+                placeholder='Indique cualquier situación, indicación o información adicional que consideres necesaria para el requerimiento.'
                 value={message}
                 onChange={e => setMessage(e.target.value)}
                 className='min-h-[100px]'
@@ -294,7 +330,10 @@ export const RequestTable = () => {
 
           <div className='mt-6 flex flex-col gap-4 sm:flex-row sm:justify-between items-center'>
             <div className='flex gap-4 w-full sm:w-auto'>
-              <ButtonSend onClick={handleSendRequest}>
+              <ButtonSend
+                onClick={handleSendRequest}
+                disabled={customProducts.length === 0 && products.length === 0}
+              >
                 Enviar solicitud
               </ButtonSend>
               <Button
@@ -306,6 +345,12 @@ export const RequestTable = () => {
               </Button>
             </div>
           </div>
+          {products.length === 0 && customProducts.length === 0 && (
+            <p className='text-xs text-muted-foreground mt-4'>
+              Para enviar la solicitud, debes agregar al menos un producto con o
+              sin código.
+            </p>
+          )}
         </CardContent>
       </Card>
       <p className='text-sm text-muted-foreground text-center'>

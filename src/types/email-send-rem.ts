@@ -9,4 +9,6 @@ export interface EmailSendRemProps {
   message: string
   products: Product[]
   customProducts: CustomProduct[]
+  delivery: number
+  currency: string
 }

@@ -4,8 +4,18 @@ import { generateUniqueCode } from '@/utils/generateUniqueCode'
 
 export async function POST (request: Request) {
   try {
-    const { userId, name, email, dateRequest, ceco, message, products, customProducts } =
-      await request.json()
+    const {
+      userId,
+      name,
+      email,
+      dateRequest,
+      ceco,
+      message,
+      products,
+      customProducts,
+      delivery,
+      currency
+    } = await request.json()
 
     const formattedDateSend = new Date()
     const formattedDateRequest = new Date(dateRequest)
@@ -20,7 +30,9 @@ export async function POST (request: Request) {
       ceco,
       message,
       products,
-      customProducts
+      customProducts,
+      delivery,
+      currency
     )
 
     await insertRem(
@@ -31,7 +43,9 @@ export async function POST (request: Request) {
       message,
       userId,
       products,
-      customProducts
+      customProducts,
+      delivery,
+      currency
     )
 
     return Response.json(

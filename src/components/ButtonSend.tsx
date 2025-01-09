@@ -10,6 +10,7 @@ import { ButtonSendProps } from '@/types/button-send'
 export const ButtonSend = ({
   children,
   variant = 'default',
+  disabled,
   onClick,
   ...props
 }: ButtonSendProps) => {
@@ -62,7 +63,7 @@ export const ButtonSend = ({
       <Button
         variant={variant}
         onClick={handleClick}
-        disabled={loading}
+        disabled={loading || disabled}
         {...props}
       >
         {loading ? (
