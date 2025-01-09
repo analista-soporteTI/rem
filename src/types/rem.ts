@@ -8,6 +8,6 @@ export interface Rem {
   message: any
   products: any
   custom_products: any
-  delivery: number
-  currency: string
+  delivery: any
+  currency: any
 }
