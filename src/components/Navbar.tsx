@@ -64,7 +64,7 @@ export const Navbar = () => {
             Seguimiento REM
           </Link>
           <Link
-            href='/inspections'
+            href='/inspecciones'
             className='font-medium hover:opacity-70 duration-200 ease-in-out'
           >
             Inspecciones
@@ -106,7 +106,7 @@ export const Navbar = () => {
                 Seguimiento REM
               </Link>
               <Link
-                href='/inspections'
+                href='/inspecciones'
                 className='font-medium hover:opacity-70 duration-200 ease-in-out'
                 onClick={toggleMenu}
               >
