@@ -1,4 +1,3 @@
-import { InspectionData } from '@/types/inspection-data'
 import { formatDate } from '@/utils/dateFormatter'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
@@ -89,7 +88,7 @@ const formatSection = (
 }
 
 export const generatePdf = async (
-  data: InspectionData
+  data: any
 ): Promise<Uint8Array> => {
   const doc = new jsPDF({
     orientation: 'portrait',
