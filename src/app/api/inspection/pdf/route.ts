@@ -1,10 +1,9 @@
 import { generatePdf } from '@/services/pdf/generatePdf'
-import { InspectionData } from '@/types/inspection-data'
 import { NextResponse } from 'next/server'
 
 export async function POST (request: Request) {
   try {
-    const data = (await request.json()) as InspectionData
+    const data = (await request.json()) as any
     console.log('pdf', data)
 
     const pdfBytes = await generatePdf(data)
