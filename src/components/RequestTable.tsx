@@ -265,7 +265,7 @@ export const RequestTable = () => {
                   <SelectItem value='11'>María Gomez</SelectItem>
                   <SelectItem value='12'>Felipe Azolas</SelectItem>
                   <SelectItem value='13'>Arnaldo Gonzalez</SelectItem>
-                  <SelectItem value='14'>Natanael Alviña</SelectItem>
+                  <SelectItem value='14'>Natanael Albiña</SelectItem>
                 </SelectContent>
               </Select>
               <p className='text-sm text-muted-foreground'>
@@ -288,7 +288,7 @@ export const RequestTable = () => {
               />
             </div>
 
-            {userId === '8' && (
+            {userId === '8' || userId === '14' && (
               <>
                 <div className='space-y-2 col-span-1'>
                   <Label>Costo total del envío ({currency})</Label>
