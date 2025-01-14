@@ -288,7 +288,7 @@ export const RequestTable = () => {
               />
             </div>
 
-            {userId === '8' || userId === '14' && (
+            {(userId === '8' || userId === '14') && (
               <>
                 <div className='space-y-2 col-span-1'>
                   <Label>Costo total del envío ({currency})</Label>
