@@ -14,12 +14,8 @@ export const insertRem = async (
   currency: string
 ) => {
   const turso = await getTursoClient()
-  let transactionStarted = false
 
   try {
-    await turso.execute('BEGIN;')
-    transactionStarted = true
-
     const remsQuery = `
       INSERT INTO rems (rem_code, ceco, date_send, date_request, message, status, user_id, delivery, currency)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
@@ -84,17 +80,8 @@ export const insertRem = async (
       })
     }
 
-    await turso.execute('COMMIT;')
-    transactionStarted = false
     return true
   } catch (error) {
-    if (transactionStarted) {
-      try {
-        await turso.execute('ROLLBACK;')
-      } catch (rollbackError) {
-        console.error('Error during rollback:', rollbackError)
-      }
-    }
     console.error('Error in batch operation:', error)
 
     if (error) {
