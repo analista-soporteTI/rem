@@ -84,6 +84,8 @@ export const insertRem = async (
       })
     }
 
+    await turso.execute('COMMIT;')
+    transactionStarted = false
     return true
   } catch (error) {
     if (transactionStarted) {
@@ -94,6 +96,13 @@ export const insertRem = async (
       }
     }
     console.error('Error in batch operation:', error)
-    throw new Error(`Batch operation failed. Error: ${error}`)
+
+    if (error) {
+      throw new Error(
+        'Foreign key constraint violation. Ensure related records exist in referenced tables.'
+      )
+    } else {
+      throw new Error(`Batch operation failed. Error: ${error}`)
+    }
   }
 }
