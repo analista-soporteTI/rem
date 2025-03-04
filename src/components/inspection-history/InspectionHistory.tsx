@@ -1,7 +1,6 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useInspections } from '@/hooks/useInspections'
 import { fetchInspections } from '@/lib/db/fetchInspections'
 import { RemCatalogLoader } from '@/components/rem/RemCatalogLoader'
 import { InspectionHistoryCard } from '@/components/inspection-history/InspectionHistoryCard'
@@ -22,7 +21,7 @@ const REFRESH_INTERVAL = 10 * 60 * 1000
 
 export const InspectionHistory = ({ data }: InspectionCatalogProps) => {
   const [loading, setLoading] = useState(true)
-  const { inspections, setInspections, clearInspections } = useInspections()
+  const [inspections, setInspections] = useState(data)
   const [currentPage, setCurrentPage] = useState(1)
   const [search, setSearch] = useState('')
 
@@ -33,13 +32,12 @@ export const InspectionHistory = ({ data }: InspectionCatalogProps) => {
 
   const fetchData = useCallback(async () => {
     try {
-      clearInspections()
       const newInspections = await fetchInspections()
       setInspections(newInspections)
     } catch (error) {
       console.error('Failed to fetch inspections:', error)
     }
-  }, [clearInspections, setInspections])
+  }, [setInspections])
 
   useEffect(() => {
     fetchData()
@@ -54,10 +52,9 @@ export const InspectionHistory = ({ data }: InspectionCatalogProps) => {
       return
     }
 
-    clearInspections()
     setInspections(data)
     setLoading(false)
-  }, [data, setInspections, clearInspections])
+  }, [data, setInspections])
 
   const filteredAndSortedInspections = useMemo(() => {
     const filtered = inspections.filter(inspection => {
@@ -94,7 +91,6 @@ export const InspectionHistory = ({ data }: InspectionCatalogProps) => {
   const handleRefresh = useCallback(async () => {
     setLoading(true)
     try {
-      clearInspections()
       const newInspections = await fetchInspections()
       setInspections(newInspections)
     } catch (error) {
@@ -102,7 +98,7 @@ export const InspectionHistory = ({ data }: InspectionCatalogProps) => {
     } finally {
       setLoading(false)
     }
-  }, [setInspections, clearInspections])
+  }, [setInspections])
 
   if (!data?.length) {
     return (
@@ -111,8 +107,6 @@ export const InspectionHistory = ({ data }: InspectionCatalogProps) => {
       </p>
     )
   }
-
-  console.log('inspections',inspections)
 
   return (
     <>
@@ -154,7 +148,10 @@ export const InspectionHistory = ({ data }: InspectionCatalogProps) => {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
               >
-                <InspectionHistoryCard key={inspection.id} inspection={inspection} />
+                <InspectionHistoryCard
+                  key={inspection.id}
+                  inspection={inspection}
+                />
               </motion.div>
             ))}
           </AnimatePresence>
