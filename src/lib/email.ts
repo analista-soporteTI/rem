@@ -28,7 +28,8 @@ export const sendEmail = async (
       'rodrigo.latorre@diprofire.cl',
       'kevin.villarroel@diprofire.cl',
       'victor.rojas@diprofire.cl',
-      'paulina.gutierrez@diprofire.cl'
+      'paulina.gutierrez@diprofire.cl',
+      'gabriela.rodriguez@diprofire.cl'
     ],
     subject: `REM ${rem_code}`,
     react: EmailSendRem({
